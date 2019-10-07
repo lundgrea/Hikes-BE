@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-app.set('port', process.env.PORT || 3000);
+const cors = require('cors');
+
+app.use(cors());
+
+app.set('port', process.env.NODE_ENV || 3001);
 app.locals.title = 'Boulder Hikes';
 app.locals.hikes = [
   {
@@ -25,7 +29,7 @@ app.get('/', (request, response) => {
 
 app.get('/api/v1/hikes', (request, response) => {
   const { hikes } = app.locals;
-  return response.status(200).json({hikes: hikes})
+  return response.status(200).json(hikes)
 })
 
 app.listen(app.get('port'), () => {
